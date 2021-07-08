@@ -132,7 +132,6 @@ const UserProfile = () => {
     useEffect(fetchData, [userId, token]);
     const logOutUser = () => {
         localStorage.clear();
-        window.location.reload();
         console.clear();
     }
     return(

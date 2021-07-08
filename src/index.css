@@ -135,12 +135,18 @@ nav .flash{
   padding: 15px 60px;
   outline: none;
   border: none;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+
 }
 .subContent3 button:hover{
   background-color: rgba(46, 42, 3, 0.3);
   color: gold;
   font-size: 18px;
-  transition: 0.3s ease-in-out;
+
+}
+.subContent3 button:active{
+  background-color: rgb(141, 120, 3);
 }
 .content4{
   background-color: rgb(24, 23, 23);
@@ -168,6 +174,8 @@ nav .flash{
   border-radius: 30px 30px 30px 30px;
   outline: none;
   border: none;
+  transition: .5s ease;
+  cursor: pointer;
 
 }
 .content4 button:hover{
@@ -175,8 +183,10 @@ nav .flash{
   color: gold;
   font-size: 18px;
   box-shadow: 8px 5px 5px rgb(141, 120, 3);
-  transition: .3s ease-in-out;
 
+}
+.content4 button:active{
+   background-color: rgb(78, 68, 3);
 }
 .content5{
   background-color: black;
@@ -668,6 +678,9 @@ nav .flash{
 }
 .amountText{
   text-align: center;
+}
+.amount{
+  transition: .5s ease-in;
 }
 .btn-btn-con{
   width: 210px;

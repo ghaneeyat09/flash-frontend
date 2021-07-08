@@ -9,7 +9,7 @@ const HomePage = () => {
     setInit(!init);
 }
     return(
-        <div className="homePage">
+        <div className="homePage" onClick={init ? toggleModal : console.log('do nothing')}>
            <div className="main-content">
             <nav>
                 <h1 className="flash">flash</h1>
@@ -54,7 +54,9 @@ const HomePage = () => {
               <div className="subContent3">
                 <h2>enquire now</h2>
                 <h5>we will get back to you within 24hrs</h5>
-                <form>
+                <form onSubmit= { (e) => {
+                 e.preventDefault();
+                }}>
                     <input placeholder="Full Name"/><br/>
                     <input placeholder="Email"/><br/>
                     <input placeholder="Phone"/><br/>
