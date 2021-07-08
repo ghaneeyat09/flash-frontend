@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import HomePage from './Homepage';
+import Features from './Features';
+import Service from './Service';
+import SignUp from './SignUp';
+import SignupUser from './SignupUser';
+import SignAdmin from './SignupAdmin';
+import UserProfile from './UserProfile';
+import AdminProfile from './AdminProfile';
+import CreateOrder from './CreateOrder';
+import Login from './Login';
 
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/Features" component={Features}/>
+          <Route exact path="/Service" component={Service}/>
+          <Route exact path="/SignUp" component={SignUp}/>
+          <Route exact path="/SignupUser" component={SignupUser}/>
+          <Route exact path="/SignupAdmin" component={SignAdmin}/>
+          <Route exact path="/UserProfile" component={UserProfile}/>
+          <Route exact path="/AdminProfile" component={AdminProfile}/>
+          <Route exact path="/CreateOrder" component={CreateOrder}/>
+          <Route exact path="/Login" component={Login}/>
+        </Switch>
+      </Router>
     </div>
   );
 }
