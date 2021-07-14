@@ -178,8 +178,8 @@ const AdminProfile = () => {
                  <td>{order.recPhoneNo}</td>
                  <td>{order.status}</td>
                  <td className="location"><button className="locationBtn" onClick={() => changePresentLoation(order._id)} style={{cursor: 'pointer'}} disabled={order.status === "cancelled" ? true : false}>{order.presentLoc}</button></td>
-                 <td><button className="btnBtnAdmin" onClick={() => changeOrderStatus(order._id)} disabled={order.status === "cancelled" ? true : false}><FaPen style={{color: 'green', fontSize: '12px'}} /></button></td>
-                 <td><button className="btnBtnAdmin" onClick={() => deleteOrder(order._id)} disabled={order.status === "cancelled" ? true : false}><FaTrash style={{color: 'red', fontSize: '12px'}}/></button></td>
+                 <td><button className="btnBtnAdmin" onClick={() => changeOrderStatus(order._id)} disabled={order.status === "cancelled" || order.status === "delivered" ? true : false}><FaPen style={{color: 'green', fontSize: '12px'}} /></button></td>
+                 <td><button className="btnBtnAdmin" onClick={() => deleteOrder(order._id)} disabled={order.status === "cancelled" || order.status === "delivered" ? true : false}><FaTrash style={{color: 'red', fontSize: '12px'}}/></button></td>
                </tr>
                  ))
 }

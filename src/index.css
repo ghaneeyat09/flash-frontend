@@ -641,18 +641,25 @@ nav .flash{
 }
 
 .adminTable .locationBtn{
-  background-color: black;
   width: 100px;
   color: gold;
+  background-color: black;
 }
 .adminTable .locationBtn:hover{
   color: black;
+  background-color: gold;
 }
 .adminTable .edit{
   width: 20px;
 }
 .adminTable .trash{
   width: 20px;
+}
+.location{
+  background-color: black;
+}
+.location:hover{
+  background-color: gold;
 }
 
 /******create order styles******/
