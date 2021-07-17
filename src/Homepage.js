@@ -7,9 +7,10 @@ const HomePage = () => {
     const [init, setInit] = useState(false);
     const toggleModal = () => {
     setInit(!init);
-}
+} 
+
     return(
-        <div className="homePage" onClick={init ? toggleModal : console.log('do nothing')}>
+        <div className="homePage" onClick={init ? toggleModal : console.log('nothing')}>
            <div className="main-content">
             <nav>
                 <h1 className="flash">flash</h1>
