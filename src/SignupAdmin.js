@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+/*import { useHistory } from 'react-router';
 import { useForm} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -38,7 +38,7 @@ const SignAdmin = () => {
            {
             method: "POST",
             headers: {
-                Accept: "application/json, text/plain, */*", "Content-Type": "application/json"
+                Accept: "application/json, text/plain, *//*", "Content-Type": "application/json"
             },
             body: JSON.stringify(admin)
 
@@ -107,3 +107,4 @@ const SignAdmin = () => {
     )
     }
 export default SignAdmin;
+*/

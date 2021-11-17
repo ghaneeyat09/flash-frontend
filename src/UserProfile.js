@@ -1,24 +1,49 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import { FaPen } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
+import Popup from './DestinationPopup';
+//import AlertJs from './Alert';
 
 const UserProfile = () => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
+    const [display, setDisplay] = useState(false);
+    //const [newDest, setNewdest] = useState('');
     const [data, setData] = useState([]); 
     const [table, setTable] = useState('');
+    //const rowTarget = useRef();
     const history = useHistory();
+    //destchange
+    /*const destChange = (e) => {
+        setNewdest(e.target.value);
+        console.log(newDest);
+    }*/
     //if no token
     if(!token){
         history.push('/login');
      }
-    //changeDestination
-    const changeDest = (rowId, rowStatus) => {
-        
+    
+     //clearPopup
+    const clearPop = () => {
+        setDisplay(false);
+    }
+    //displayPop
+    const displayPop = (rowStatus, rowId) => {
         if(rowStatus !== "delivered" && rowStatus !== "cancelled"){
-            const newDest = prompt("Enter a new destination");
-              if(newDest !== null){
+            setDisplay(true);
+            localStorage.setItem("id", rowId);
+
+    }
+    else if(rowStatus === "delivered"){
+        alert("parcel order has been delivered");
+    }
+}
+    /*changeDestination
+    const changeDest = () => {
+        const rowId = localStorage.getItem('id');
+        if(newDest !== ""){
+                clearPop();
                 fetch(`https://send-it-back-app.herokuapp.com/order/${rowId}`, {
                 method: "PATCH",
                 headers: {
@@ -41,12 +66,7 @@ const UserProfile = () => {
                  console.log(err);
              })
            }
-          }
-       else if(rowStatus === "delivered"){
-              alert("parcel order has been delivered");
-          }
-       }      
-       
+        }*/
     //cancelFunc
     const cancelFunc = (rowId, rowStatus) => {
 
@@ -85,7 +105,7 @@ const UserProfile = () => {
             .then((res) => {
                if(res.message === "data cancelled"){
                    //console.log("order cancelled!");
-                   alert('parel order has been cancelled');
+                   alert('parcel order has been cancelled');
                    window.location.reload();
 
                }
@@ -109,7 +129,7 @@ const UserProfile = () => {
                 //console.log("no parcel delivery order yet");
                 setTable('no parcel delivery order yet');
             }
-           if(res.orders){
+            if(res.orders.length > 0){
 
            const result = res.orders;
            const totalOrders = document.getElementsByClassName('noOfOthers')[0];
@@ -154,6 +174,7 @@ const UserProfile = () => {
                 <Link to="/"><button className="logout" onClick={logOutUser}>logOut</button></Link>
                 </div>
                 <div className="sectionB">
+                    <Popup classname={display? "popShow": "popHide"} cClick={clearPop} text={"enter a new destination"}/>
                     <p className="parcelMsg">{table}</p>
                     <table className="table" border="1">
                         <thead className={data.length >= 1? 'thead': 'theadHide'}>
@@ -179,7 +200,7 @@ const UserProfile = () => {
                                 <td>{order.recName}</td>
                                 <td>{order.recPhoneNo}</td>
                                 <td className="status">{order.status}</td>
-                                <td> <button onClick={() => changeDest(order._id, order.status)} className="editBtn userBTn" disabled={order.status === 'cancelled'? true: false}><FaPen style={{color: "green"}}/></button></td>
+                                <td><button onClick={() => displayPop(order.status, order._id)} className="editBtn userBTn" disabled={order.status === 'cancelled'? true: false}><FaPen style={{color: "green"}}/></button></td>
                                 <td> <button onClick={() => cancelFunc(order._id, order.status)} className="cancelBtn userBTn" disabled={order.status === 'cancelled'? true: false}><FaTrash style={{color: 'red'}}/></button></td>
                             </tr>
                                 ))

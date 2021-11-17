@@ -2,12 +2,25 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
-import React, { useState } from "react";
-//import AutocompletePlaces from './PlacesApi';
+import React, { useState, useEffect } from "react";
+
 //create order component
+
+const google = window.google ? window.google : {}
 const CreateOrder = () => {
       const [amount, setAmount] = useState('');
-      //display amount func
+      //const [pickupLocation, setPickupLocation] = useState('');
+      //display amount func0
+
+      const initialState = {
+      pickup: "",
+      destination: "",
+      recName: "",
+      recPhone: "",
+      weight: ""
+       };
+  const [input, setInput] = React.useState(initialState);
+
       const showAmount = ()=> {
          const weight = document.getElementsByClassName('weight')[0].value;
          setAmount( weight * 330);
@@ -24,9 +37,9 @@ const CreateOrder = () => {
       });
 
       const { register, handleSubmit, formState: {errors}} = useForm({
-         resolver: yupResolver(schema),
-         mode: 'onChange'
+         resolver: yupResolver(schema)
       });
+      //onsubmit func
       const onSubmit = (data) => {
          console.log(data);
         const token = localStorage.getItem("token");
@@ -64,17 +77,54 @@ const CreateOrder = () => {
       })
      
    }
+   useEffect( ()=> {
+ 
+    let autocomplete = new google.maps.places.Autocomplete(
+          (document.getElementById('pickup')),
+  
+          { types: ['geocode']});
+  
+  
+      google.maps.event.addListener(autocomplete, 'place_changed', function() {
+  
+        fillInAddress(autocomplete);
+  
+      });
+  
+    let autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('destination'), { 
+    types: [ 'geocode' ] });
+  
+      google.maps.event.addListener(autocomplete2, 'place_changed', function() {
+  
+        fillInAddress(autocomplete2);
+  
+      });
+      const fillInAddress=()=>{
+        setInput({...input, 
+          pickup: document.getElementById("pickup").value, 
+          destination: document.getElementById('destination').value});
+      }
+   
+          },[]);
+    //handle input change
+    const handleChange = event => {
+           setInput({
+             ...input,
+           [event.target.name]: event.target.value
+        })
+          };
+        
       return(
           <div className="createOrder">
              <div className="logoStyle">
                 <h1 className="eff">f</h1>
                 <h3 className="lash">lash</h3>
              </div>
-             <form onSubmit={handleSubmit(onSubmit)}>
+             <form onSubmit={handleSubmit(onSubmit)} autoComplete="new-password">
                 <div className="orderContainer">
-                  <input {...register('pickup')} className="pickup" placeholder="Pickup Location" />
-                  <p className="messages">{errors.pickup?.message}</p>
-                  <input {...register('destination')} type="text"  className="destination" placeholder="Destination"/>
+                 <input {...register('pickup')} type='text' className="pickup" id="pickup" value={input.pickup} onChange={handleChange} placeholder='Pickup Location'/>
+                 <p className="messages">{errors.pickup?.message}</p>
+                  <input {...register('destination')} type="text" id="destination"  className="destination" placeholder="Destination"/>
                   <p className="messages">{errors.destination?.message}</p>
                   <input type="text" className="recName" placeholder="Recipient Name"  {...register('recName')}/>
                   <p className="messages">{errors.recName?.message}</p>

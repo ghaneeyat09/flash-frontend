@@ -3,14 +3,20 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import flash3 from './flash3.jpg';
 import HomeModalPop from './HomeModalPop';
+import { useHistory } from 'react-router';
+
 const HomePage = () => {
     const [init, setInit] = useState(false);
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem('email');
+    const history = useHistory();
+    
     const toggleModal = () => {
     setInit(!init);
 } 
 
     return(
-        <div className="homePage" onClick={init ? toggleModal : console.log('nothing')}>
+        <div className="homePage" onClick={init ? toggleModal : undefined}>
            <div className="main-content">
             <nav>
                 <h1 className="flash">flash</h1>
@@ -28,10 +34,10 @@ const HomePage = () => {
                         <Link to="/about">about</Link>
                     </li>
                     <li>
-                        <Link to="/signup">signUp</Link>
+                        <Link to={token ? "/userprofile" : "/signupUser"}>signUp</Link>
                     </li>
                     <li>
-                       <Link to="/login">login</Link>
+                       <Link to={token && email !== "kiekie@gmail.com" ? "/userprofile" : "/login"}>login</Link>
                      </li>
                 </ul>
                     <FaBars className="faBar" onClick={toggleModal}/>

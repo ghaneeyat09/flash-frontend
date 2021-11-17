@@ -1,4 +1,4 @@
-import { FaUserTie } from "react-icons/fa";
+/*import { FaUserTie } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const SignUp = () => {
@@ -15,4 +15,4 @@ const SignUp = () => {
         </div>
     )
 }
-export default SignUp;
+export default SignUp;*/

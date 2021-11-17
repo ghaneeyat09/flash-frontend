@@ -578,6 +578,7 @@ nav .flash{
   padding: 15px 0 15px 0;
   text-transform: uppercase;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 .adminProfile .logout button:hover{
   background-color: rgb(68, 56, 6);
@@ -639,15 +640,24 @@ nav .flash{
   margin: auto;
   background-color: black;
 }
-
+.adminTable .btnBtnAdmin:hover{
+  background-color: black;
+}
+.faedit :hover{
+  color: rgb(184, 245, 92);
+}
+.fatrash :hover{
+  color: rgb(252, 108, 72);
+}
 .adminTable .locationBtn{
   width: 100px;
-  color: gold;
+  color: rgb(145, 123, 3);
+  margin-bottom: 10px;
   background-color: black;
 }
 .adminTable .locationBtn:hover{
-  color: black;
-  background-color: gold;
+  color: gold;
+  background-color: black;
 }
 .adminTable .edit{
   width: 20px;
@@ -655,11 +665,11 @@ nav .flash{
 .adminTable .trash{
   width: 20px;
 }
-.location{
-  background-color: black;
+.displayPage{
+  display: block;
 }
-.location:hover{
-  background-color: gold;
+.hidePage{
+  display: none;
 }
 
 /******create order styles******/
@@ -835,4 +845,127 @@ nav .flash{
     width: 440px;
   }
 
+}
+/******dest popup******/
+#popupCon{
+  width: 300px;
+  text-align: center;
+  position: fixed;
+  border: 1px solid black;
+  background-color: white;
+}
+#currentpop{
+  width: 300px;
+  text-align: center;
+  position: fixed;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  margin: auto;
+}
+.destHead{
+  font-size: 20px;
+  text-transform: capitalize;
+  padding: 20px 5px;
+}
+#popupCon .destBtn{
+  margin: 15px 10px;
+  border-radius: 5px;
+}
+.popShow{
+  display: block;
+}
+.popHide{
+  display: none;
+}
+#currentpop .destBtn{
+  width: 100px;
+  height: 25px;
+  background-color: rgb(226, 222, 222);
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/*****Guide****/
+#guide{
+  background-color: black;
+}
+.guideIt{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: 
+  "editLocation editLocation ."
+  ". editOrderStatus editOrderStatus "
+  "deleteOrder deleteOrder .";
+  justify-content: center;
+}
+.editLocation{
+  background-color: rgb(138, 118, 3);
+  grid-area: editLocation;
+  margin-top: 80px;
+  margin-left: 150px;
+  border: 1px solid gold;
+  border-radius: 20px;
+  text-align: left;
+  height: 250px;
+}
+.editLocation .content{
+  padding: 60px;
+}
+.editLocation .content li{
+  color: white;
+  list-style-type: square;
+  padding-top: 2px;
+}
+.editOrderStatus{
+  background-color: rgb(250, 213, 7);
+  grid-area: editOrderStatus;
+  margin-right: 150px;
+  margin-top: 20px;
+  border: 1px solid gold;
+  border-radius: 20px;
+  text-align: left;
+  height: 250px;
+}
+.editOrderStatus .content{
+  padding: 60px;
+}
+.editOrderStatus .content li{
+  color: white;
+  list-style-type: square;
+  padding-top: 2px;
+}
+.deleteOrder{
+  background-color: rgb(138, 118, 3);
+  grid-area: deleteOrder;
+  margin-left: 150px;
+  margin-top: -40px;
+  border: 1px solid gold;
+  border-radius: 20px;
+  text-align: left;
+  height: 250px;
+}
+.deleteOrder .content{
+  padding: 60px;
+}
+.deleteOrder .content li{
+  color: white;
+  list-style-type: square;
+  padding-top: 2px;
+}
+#guide h2{
+  color: white;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 30px;
+}
+#guide .instruction{
+  color: white;
+  text-align: center;
+  font-weight: 100;
+  font-family: 'Courier New', Courier, monospace;
+  word-spacing: 1px;
+  font-size: 13px;
 }

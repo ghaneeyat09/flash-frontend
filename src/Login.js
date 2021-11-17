@@ -5,6 +5,14 @@ import * as yup from 'yup';
 import { Link } from "react-router-dom";
 const Login = () => {
     const history = useHistory();
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+    if(token && email !== "kiekie@gmail.com"){
+        history.push('/userprofile');
+    }
+    else if(token && email === "kiekie@gmail.com"){
+        history.push('/adminprofile');
+    }
     const schema = yup.object().shape({
         email: yup.string()
         .required("email is required")
@@ -22,14 +30,14 @@ const Login = () => {
         });
     const onSubmit = (data) => {
        console.log(data);
-       const passWord = data.password
-       const secretCode = "0987IamSeNDIt87AdMiN0805";
-       if(passWord.match(secretCode)){
-        fetch("https://send-it-back-app.herokuapp.com/user/login/admin", 
+       //login admin
+       if(data.email === 'kiekie@gmail.com' && data.password === 'kiekiexo' ){
+ 
+        fetch("https://send-it-back-app.herokuapp.com/user/login", 
         {
             method: "POST",
             headers: {
-                Accept: "application/json, text/plain, */*", "Content-Type": "application/json"
+                Accept: "application/json, text/plain, *//*", "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 email: data.email,
@@ -39,17 +47,9 @@ const Login = () => {
         .then((res) => res.json())
         .then((res) => {
             console.log(res);
-            if(res.message === "user not found" && data.password !== ""){
-                alert('user not registered');
-                return false;
-            }
-            if(res.message === "invalid email/password"){
-                alert('invalid email/password');
-            }
-            else if(res.token){
-                const { _id } = res.admin;
+                const { _id } = res.user;
                 localStorage.setItem("token", res.token)
-                fetch(`https://send-it-back-app.herokuapp.com/user/login/${_id}/admin`, {
+                fetch(`https://send-it-back-app.herokuapp.com/user/login/${_id}`, {
                     method: "GET",
                     headers: {
                         Authorization: res.token,
@@ -61,20 +61,20 @@ const Login = () => {
                         localStorage.setItem("firstName", res.data.firstName);
                         localStorage.setItem("userId", res.data._id);
                         localStorage.setItem("email", res.data.email);
-                        data.email= "";
-                        history.push('/AdminProfile');
+                        history.push('/AdminProfile')
+                        
                     }
                     else if(res.error){
-                    console.log(res.error)
+                      console.log(res.error)
                     }
                 })
+            })
+            .catch((err) => {
+                console.log(err)
             }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-        }  
-         
+            )
+        } 
+        //login basic user
        else{
        fetch("https://send-it-back-app.herokuapp.com/user/login", 
        {

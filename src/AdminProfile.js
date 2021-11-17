@@ -2,11 +2,23 @@ import { useState, useEffect} from "react";
 import { FaPen } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
+import CurrentLocPopup from './CurrentLocPop';
+import Guide from './Guide'
 const AdminProfile = () => {
   const history = useHistory()
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const [display, setDisplay] = useState(false);
+  const google = window.google ? window.google : {}
   const [data, setData] = useState([]);
-  
+  const [input, setInput] = useState('');
+  //const [loggedIn, setLoggedIn] = useState(true);
+
+
+  //clearpop
+  const clearPop = () => {
+    setDisplay(false);
+}
   //if no token 
   if(!token){
      history.push('/login');
@@ -39,10 +51,10 @@ const AdminProfile = () => {
 
   }
   //change order status
-  const changeOrderStatus = (orderId) => {
-
-    const orderStatus = prompt("do you want to change the status of the parcel order to 'on transit' or 'delivered'");
-   switch(orderStatus) {
+  const changeOrderStatus = (orderId, orderStatus) => {
+    if(orderStatus === "ready to pick"){
+    const newOrderStatus = prompt("do you want to change the status of the parcel order to 'on transit' or 'delivered'?");
+   switch(newOrderStatus) {
    case "delivered":
       fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
           method: "PATCH",
@@ -91,12 +103,45 @@ const AdminProfile = () => {
     break;
     //no default
 }
+    }
+    else if(orderStatus === "on transit"){
+      if(window.confirm("do you want to change the order to 'delivered'?")){
+      fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
+          method: "PATCH",
+          headers: {
+             "Content-Type": "application/json",
+              Authorization: token
+          },
+          body: JSON.stringify({
+             status: "delivered"
+          })
+      })
+      .then((res) => res.json())
+      .then((res) => {
+          if(res.message === "data patched"){
+              console.log("done");
+              window.location.reload();
+          }
+      })
+      .catch((err) => {
+          console.log(err);
+      })
+    }
   }
 
-  //changePresentLoation 
-  const changePresentLoation = (orderId) => {
+  }
 
-    const presentLocation = prompt("enter the present location of the parcel delivey order");
+//display pop
+  const displayPop = (rowStatus, rowId) => {
+    if(rowStatus !== "delivered" && rowStatus !== "cancelled"){
+        setDisplay(true);
+        localStorage.setItem("id", rowId);
+
+}
+  /*changePresentLoation 
+  const changePresentLoation = (orderId) => {
+  
+    //const presentLocation = prompt("enter the present location of the parcel delivey order");
     if(presentLocation !== null){
         console.log("yay")
         fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
@@ -119,7 +164,7 @@ const AdminProfile = () => {
         .catch((err) => {
             console.log(err)
         })
-    }
+    }*/
 
   }
   //logoutAdmin
@@ -144,13 +189,13 @@ const AdminProfile = () => {
     .catch((err) => {
       console.log(err);
     })
-  }
-  useEffect(getOrders, [token]);
-
-
+ }
+  useEffect(getOrders, [token, userId]);
+  
     return(
         <div className="adminProfile">
            <div className="sectionA"> 
+            <CurrentLocPopup text="enter the parcel's current location" classname={display ? "popShow" : "popHide"} cClick={clearPop}/>
              <table border="1" className="adminTable">
              <thead>
                 <tr>
@@ -177,9 +222,9 @@ const AdminProfile = () => {
                  <td>{order.recName}</td>
                  <td>{order.recPhoneNo}</td>
                  <td>{order.status}</td>
-                 <td className="location"><button className="locationBtn" onClick={() => changePresentLoation(order._id)} style={{cursor: 'pointer'}} disabled={order.status === "cancelled" ? true : false}>{order.presentLoc}</button></td>
-                 <td><button className="btnBtnAdmin" onClick={() => changeOrderStatus(order._id)} disabled={order.status === "cancelled" || order.status === "delivered" ? true : false}><FaPen style={{color: 'green', fontSize: '12px'}} /></button></td>
-                 <td><button className="btnBtnAdmin" onClick={() => deleteOrder(order._id)} disabled={order.status === "cancelled" || order.status === "delivered" ? true : false}><FaTrash style={{color: 'red', fontSize: '12px'}}/></button></td>
+                 <td className="location"><button className="locationBtn" onClick={() => displayPop(order.status, order._id)} style={{cursor: 'pointer'}} disabled={order.status === "cancelled" ? true : false}>{order.presentLoc}</button></td>
+                 <td><button className="btnBtnAdmin" onClick={() => changeOrderStatus(order._id, order.status)} disabled={order.status === "cancelled" || order.status === "delivered" ? true : false}><FaPen className="faedit" style={{color: 'green', fontSize: '12px'}} /></button></td>
+                 <td><button className="btnBtnAdmin" onClick={() => deleteOrder(order._id)} disabled={order.status === "ready to pick" || order.status === "on transit" ? true : false}><FaTrash className="fatrash" style={{color: 'red', fontSize: '12px'}}/></button></td>
                </tr>
                  ))
 }
@@ -195,9 +240,12 @@ const AdminProfile = () => {
              <h2><span>{localStorage.getItem('firstName')}</span></h2>
              <div className="logout">
                 <Link to="/"><button onClick={logoutAdmin}>logOut</button></Link>
+                <Link to="/guide"><button>admin's guide</button></Link>
+
              </div>
            </div>
         </div>
+
     )
 }
 export default AdminProfile;
