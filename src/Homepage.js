@@ -9,7 +9,7 @@ const HomePage = () => {
     const [init, setInit] = useState(false);
     const token = localStorage.getItem("token");
     const email = localStorage.getItem('email');
-    const history = useHistory();
+
     
     const toggleModal = () => {
     setInit(!init);
