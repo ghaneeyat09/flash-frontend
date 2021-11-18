@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import flash3 from './flash3.jpg';
 import HomeModalPop from './HomeModalPop';
-import { useHistory } from 'react-router';
 
 const HomePage = () => {
     const [init, setInit] = useState(false);

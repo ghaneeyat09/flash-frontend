@@ -3,15 +3,12 @@ import { FaPen } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import CurrentLocPopup from './CurrentLocPop';
-import Guide from './Guide'
 const AdminProfile = () => {
   const history = useHistory()
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const [display, setDisplay] = useState(false);
-  const google = window.google ? window.google : {}
   const [data, setData] = useState([]);
-  const [input, setInput] = useState('');
   //const [loggedIn, setLoggedIn] = useState(true);
 
 
