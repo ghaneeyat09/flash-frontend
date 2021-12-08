@@ -170,7 +170,6 @@ const UserProfile = () => {
                   </ul>
                 </div>
                 <Link to="CreateOrder"><button className="orderBtn">create order</button></Link>
-                <Link to="/"><button>home</button></Link>
                 <Link to="/"><button className="logout" onClick={logOutUser}>logOut</button></Link>
                 </div>
                 <div className="sectionB">

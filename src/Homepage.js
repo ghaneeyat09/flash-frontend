@@ -1,5 +1,5 @@
 import { FaBars } from 'react-icons/fa';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import { useState } from 'react';
 import flash3 from './flash3.jpg';
 import HomeModalPop from './HomeModalPop';
@@ -8,7 +8,15 @@ const HomePage = () => {
     const [init, setInit] = useState(false);
     const token = localStorage.getItem("token");
     const email = localStorage.getItem('email');
+    const history = useHistory();
 
+
+    if(token && email !== "kiekie@gmail.com"){
+        history.push('./userprofile')
+    }
+    else if(token && email === "kiekie@gmail.com"){
+        history.push('./adminprofile')
+    }
     
     const toggleModal = () => {
     setInit(!init);

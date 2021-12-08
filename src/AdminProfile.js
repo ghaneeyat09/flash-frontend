@@ -3,11 +3,13 @@ import { FaPen } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import CurrentLocPopup from './CurrentLocPop';
+import ReactSelect from "./Select";
 const AdminProfile = () => {
   const history = useHistory()
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const [display, setDisplay] = useState(false);
+  const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
   //const [loggedIn, setLoggedIn] = useState(true);
 
@@ -15,6 +17,9 @@ const AdminProfile = () => {
   //clearpop
   const clearPop = () => {
     setDisplay(false);
+}
+const erasePop = () => {
+  setShow(false);
 }
   //if no token 
   if(!token){
@@ -50,58 +55,11 @@ const AdminProfile = () => {
   //change order status
   const changeOrderStatus = (orderId, orderStatus) => {
     if(orderStatus === "ready to pick"){
-    const newOrderStatus = prompt("do you want to change the status of the parcel order to 'on transit' or 'delivered'?");
-   switch(newOrderStatus) {
-   case "delivered":
-      fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
-          method: "PATCH",
-          headers: {
-             "Content-Type": "application/json",
-              Authorization: token
-          },
-          body: JSON.stringify({
-             status: "delivered"
-          })
-      })
-      .then((res) => res.json())
-      .then((res) => {
-          if(res.message === "data patched"){
-              console.log("done");
-              window.location.reload();
-          }
-      })
-      .catch((err) => {
-          console.log(err);
-      })
-      break;
-
-      //no default
-   case "on transit":
-    fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
-        method: "PATCH",
-        headers: {
-           "Content-Type": "application/json",
-            Authorization: token
-        },
-        body: JSON.stringify({
-           status: "on transit"
-        })
-    })
-    .then((res) => res.json())
-    .then((res) => {
-        if(res.message === "data patched"){
-            console.log("done");
-            window.location.reload();
-        }
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-    break;
-    //no default
-}
+    //const newOrderStatus = prompt("do you want to change the status of the parcel order to 'on transit' or 'delivered'?");
+    setShow(true);
+    localStorage.setItem("orderId", orderId);
     }
-    else if(orderStatus === "on transit"){
+    else if(orderStatus === "in transit"){
       if(window.confirm("do you want to change the order to 'delivered'?")){
       fetch(`https://send-it-back-app.herokuapp.com/order/${orderId}`, {
           method: "PATCH",
@@ -127,6 +85,7 @@ const AdminProfile = () => {
   }
 
   }
+
 
 //display pop
   const displayPop = (rowStatus, rowId) => {
@@ -193,6 +152,7 @@ const AdminProfile = () => {
         <div className="adminProfile">
            <div className="sectionA"> 
             <CurrentLocPopup text="enter the parcel's current location" classname={display ? "popShow" : "popHide"} cClick={clearPop}/>
+            <ReactSelect classname={show ? "popShow" : "popHide"} cClick={erasePop}/>
              <table border="1" className="adminTable">
              <thead>
                 <tr>

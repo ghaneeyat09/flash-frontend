@@ -145,6 +145,7 @@ const SignupUser = () => {
                             <input placeholder="email" type="text" {...register("email")} value={init.email} onChange={(e) => setInit(e.target.value)}/>
                             <p className="messages">{errors.email?.message}</p>
                             <input placeholder="phone" type="text" {...register('phone')} value={init.phone} onChange={(e) => setInit(e.target.value)}/>
+                            <p style={{color: "green"}}>+234(mobile no. must include a country code)</p>
                             <p className="messages">{errors.phone?.message}</p>
                             <input placeholder="address" type="text" {...register('homeAddress')} id="hAddress" value={init.address} onChange={handleChange}/>
                             <p className="messages">{errors.address?.message}</p>

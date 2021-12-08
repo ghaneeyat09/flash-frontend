@@ -969,3 +969,43 @@ nav .flash{
   word-spacing: 1px;
   font-size: 13px;
 }
+/*********************/
+#statusCon{
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 100px;
+  border-radius: 0 0 5px 5px;
+}
+.subStatusCon{
+  margin-top: 50px;
+  color: black;
+  text-align: center;
+}
+.statusLabel{
+  font-size: 19px;
+  font-weight: 600px;
+  font-family:'Times New Roman', Times, serif;
+}
+#status-stat{
+  width: 200px;
+  margin-top: 30px;
+  border-radius: 3px;
+  height: 25px;
+}
+#popBtnCon .popBtn{
+  width: 70px;
+  height: 30px;
+  background-color: rgb(223, 217, 217);
+  text-align: center;
+  text-transform: lowercase;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+#popBtnCon{
+  margin-top: 10px;
+  margin-left: 190px;
+}
